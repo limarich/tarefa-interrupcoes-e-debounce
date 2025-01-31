@@ -18,3 +18,20 @@ void draw_pio(pixel *draw, PIO pio, uint sm, float intensity)
         pio_sm_put_blocking(pio, sm, valor_led);
     }
 }
+
+void test_matrix(PIO pio, uint sm)
+{
+    frame test_frame, black_frame;
+
+    pixel red = {255, 0, 0}, black = {0, 0, 0};
+
+    for (int16_t i = 0; i < PIXELS; i++)
+    {
+        test_frame[i] = red;
+        black_frame[i] = black;
+        draw_pio(test_frame, pio, sm, 0.5);
+        sleep_ms(50);
+    }
+    draw_pio(black_frame, pio, sm, 1);
+    sleep_ms(50);
+}
