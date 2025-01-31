@@ -35,10 +35,14 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(tarefa-interrupcoes-e-debounce tarefa-interrupcoes-e-debounce.c )
+add_executable(tarefa-interrupcoes-e-debounce tarefa-interrupcoes-e-debounce.c libs/leds.c)
 
 pico_set_program_name(tarefa-interrupcoes-e-debounce "tarefa-interrupcoes-e-debounce")
 pico_set_program_version(tarefa-interrupcoes-e-debounce "0.1")
+
+
+# Generate PIO header
+pico_generate_pio_header(tarefa-interrupcoes-e-debounce ${CMAKE_CURRENT_LIST_DIR}/pio_matrix.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(tarefa-interrupcoes-e-debounce 1)
@@ -46,16 +50,22 @@ pico_enable_stdio_usb(tarefa-interrupcoes-e-debounce 1)
 
 # Add the standard library to the build
 target_link_libraries(tarefa-interrupcoes-e-debounce
-        pico_stdlib)
+pico_stdlib
+hardware_adc
+hardware_pwm
+hardware_clocks
+)
 
 # Add the standard include files to the build
 target_include_directories(tarefa-interrupcoes-e-debounce PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/lib
 )
 
 # Add any user requested libraries
 target_link_libraries(tarefa-interrupcoes-e-debounce 
-        
+hardware_pio
+hardware_clocks   
         )
 
 pico_add_extra_outputs(tarefa-interrupcoes-e-debounce)
