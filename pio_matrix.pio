@@ -29,7 +29,7 @@ static inline void pio_matrix_program_init(PIO pio, uint sm, uint offset, uint p
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
 
     // Set pio clock to 8MHz, giving 10 cycles per LED binary digit
-    float div = clock_get_hz(clk_sys) / 8000000.0;
+    uint32_t div = clock_get_hz(clk_sys) / 8000000.0;
     sm_config_set_clkdiv(&c, div);
 
     // Give all the FIFO space to TX (not using RX)

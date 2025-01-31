@@ -50,7 +50,11 @@ pico_enable_stdio_usb(tarefa-interrupcoes-e-debounce 1)
 
 # Add the standard library to the build
 target_link_libraries(tarefa-interrupcoes-e-debounce
-        pico_stdlib)
+pico_stdlib
+hardware_adc
+hardware_pwm
+hardware_clocks
+)
 
 # Add the standard include files to the build
 target_include_directories(tarefa-interrupcoes-e-debounce PRIVATE
