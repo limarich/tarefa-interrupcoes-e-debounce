@@ -3,71 +3,79 @@
 
 const pixel red = {255, 0, 0}, black = {0, 0, 0};
 
-void draw_number(PIO pio, uint sm)
+void draw_number(PIO pio, uint sm, uint index)
 {
-    frame current_number;
-
-    for (int16_t i = 0; i < PIXELS; i++)
-    {
-        current_number[i] = black;
-    }
-    draw_pio(current_number, pio, sm, 1);
-
-    frame numbers[7] = {
+    frame numbers[10] = {
+        // 0
+        {black, red, red, red, black,
+         black, red, black, red, black,
+         black, red, black, red, black,
+         black, red, black, red, black,
+         black, red, red, red, black},
+        //  1
+        {black, red, red, black, black,
+         black, black, black, red, black,
+         black, red, black, black, black,
+         black, black, red, red, black,
+         black, red, black, black, black},
+        // 2
+        { black, red, red, red, black,
+          black,red, black, black, black,
+         black, red, red, red, black,
+         black, black, black, red, black,
+         black, red, red, red, black},
+        //  3
+        {black, red, red, red, black,
+          black, black, black,red, black,
+         black, red, red, red, black,
+         black, black, black, red, black,
+         black, red, red, red, black},
+        //  4
         {
-            red, black, black, black, black,
-            red, black, black, black, black,
-            red, black, black, black, black,
-            red, black, black, black, black, 
-            red, black, black, black, black
-        },
-        {
-            red, red, red, red, red,
-            red, black, black, black, red,
-            red, red, red, red, red,
-            black, black, black, black, red, 
-            red, red, red, red, red
-        },
-        {
+            black, red, black, black, black,
+            black, black, black, red, black,
             black, red, red, red, black,
-            black, black, black, red, black,
-            black, red, red, red, black, 
-            black, red, black, black, black, 
-            black, red, red, red, black
-        },
-        {
-            black, red, black, black, black,  
-            black, black, black, red, black,
-            black, red, red, red, black,  
-            black, red, black, red, black, 
             black, red, black, red, black,
+            black, red, black, red,black,
         },
-        {
-            black, red, red, red, black,
-            black, black, black, red, black, 
-            black, red, red, red, black, 
-            black, black, black, red, black,
-            black, red, red, red, black 
-        },
-        {
-            black, red, red, red, black,
-            black, red, black, black, black, 
-            black, red, red, red, black,  
-            black, black, black, red, black,  
-            black, red, red, red, black 
-        },
-        {
-            black, red, red, red, black,
-            black, black, red, black, black,  
-            black, black, red, black, black,  
-            black, black, red, black, black,
-            black, black, red, red, black
-        }
+        //  5
+        {black, red, red, red, black,
+         black, black, black, red, black,
+         black, red, red, red, black,
+         black, red, black, black, black,
+         black, red, red, red, black},
+        
+        // 6
+        {black, red, red, red, black,
+         black, red, black, red, black,
+         black, red, red, red, black,
+         black,red, black, black, black,
+         black, red, red, red, black},
+        //  7
+        {black, red, black, black, black,
+         black, black, black,red, black,
+         black, red, black, black, black,
+         black, black, black, red, black,
+         black, red, red, red, black},
+        //  8
+        {black, red, red, red, black,
+         black, red, black, red, black,
+         black, red, red, red, black,
+         black,red, black, red, black,
+         black, red, red, red, black},
+        //  9
+        {black, red, red, red, black,
+         black, black, black, red, black,
+         black, red, red, red, black,
+         black,red, black, red, black,
+         black, red, red, red, black},
+
     };
-    
-    for (uint i = 0; i < 8; i++)
-    {
-        draw_pio(numbers[i], pio, sm, 1);
-        sleep_ms(1000);
-    }
+
+    // for (int i = 0; i <= 10; i++)
+    // {
+    //     draw_pio(numbers[i], pio, sm, 1);
+    //     sleep_ms(500);
+    // }
+    draw_pio(numbers[index], pio, sm, .2);
 }

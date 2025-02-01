@@ -15,7 +15,10 @@
 
 uint last_interrupt_time_a = 0;
 uint last_interrupt_time_b = 0;
-uint8_t counter = 0;
+uint counter = 0;
+PIO pio;
+uint sm;
+
 
 void gpio_irq_handler(uint gpio, uint32_t events)
 {
@@ -27,7 +30,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
         {
             last_interrupt_time_a = current_time;
             printf("interrupção do botão A detectada\n");
-            counter = counter < 10 ? counter + 1 : counter;
+            counter = counter < 9 ? counter + 1 : counter;
         }
     }
     if (gpio == button_b)
@@ -40,6 +43,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
         }
     }
     printf("valor do contador: %d\n", counter);
+    draw_number(pio, sm, counter);
 }
 
 void PIO_setup(PIO *pio, uint *sm);
@@ -50,8 +54,6 @@ void enable_interrupt();
 int main()
 {
     stdio_init_all();
-    PIO pio;
-    uint sm;
 
     // configura o clock
     clock_setup();
@@ -65,10 +67,9 @@ int main()
 
     // teste da matriz de leds
     test_matrix(pio, sm);
-    // draw_number(pio, sm);
+    draw_number(pio, sm, counter);
     while (true)
     {
-        // printf("ok");
     }
 }
 
