@@ -2,8 +2,10 @@
 #include "pico/stdlib.h"
 #include "hardware/clocks.h"
 #include "hardware/gpio.h"
+#include "hardware/pio.h"
+// bibliotecas personalizadas
 #include "libs/leds.h"
-
+#include "libs/animation.h"
 #include "pio_matrix.pio.h"
 
 #define button_a 5
@@ -44,6 +46,7 @@ int main()
     gpio_set_irq_enabled_with_callback(button_b, GPIO_IRQ_EDGE_FALL, true, &gpio_irq_handler);
     // teste da matriz de leds
     test_matrix(pio, sm);
+    draw_number(pio, sm);
     while (true)
     {
     }
