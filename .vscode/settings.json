@@ -43,6 +43,10 @@
         "pio.h": "c",
         "clocks.h": "c",
         "stdio.h": "c",
-        "gpio.h": "c"
+        "gpio.h": "c",
+        "animation.h": "c",
+        "leds.h": "c",
+        "stdint.h": "c",
+        "numbers": "c"
     }
 }

@@ -35,7 +35,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(tarefa-interrupcoes-e-debounce tarefa-interrupcoes-e-debounce.c libs/leds.c)
+add_executable(tarefa-interrupcoes-e-debounce tarefa-interrupcoes-e-debounce.c libs/leds.c libs/animation.c)
 
 pico_set_program_name(tarefa-interrupcoes-e-debounce "tarefa-interrupcoes-e-debounce")
 pico_set_program_version(tarefa-interrupcoes-e-debounce "0.1")
