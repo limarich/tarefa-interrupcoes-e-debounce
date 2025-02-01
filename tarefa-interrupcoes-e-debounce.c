@@ -12,13 +12,13 @@
 
 #define button_a 5
 #define button_b 6
+#define led_red 13
 
 uint last_interrupt_time_a = 0;
 uint last_interrupt_time_b = 0;
 uint counter = 0;
 PIO pio;
 uint sm;
-
 
 void gpio_irq_handler(uint gpio, uint32_t events)
 {
@@ -48,6 +48,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
 
 void PIO_setup(PIO *pio, uint *sm);
 void button_setup(uint gpio);
+void led_setup(uint gpio);
 void clock_setup();
 void enable_interrupt();
 
@@ -62,6 +63,8 @@ int main()
     // configuração dos botões esquerdo e direito
     button_setup(button_a);
     button_setup(button_b);
+    // configuração do led vermelho
+    led_setup(led_red);
     // configuração da interrupção nos dois botões
     enable_interrupt();
 
@@ -70,6 +73,14 @@ int main()
     draw_number(pio, sm, counter);
     while (true)
     {
+        // para o led piscar 5 vezes por segundo 1000ms / 5 = 200ms
+        for (uint i = 0; i < 5; i++) 
+        {
+            gpio_put(led_red, true);
+            sleep_ms(100);
+            gpio_put(led_red, false);
+            sleep_ms(100);
+        }
     }
 }
 
@@ -88,6 +99,11 @@ void button_setup(uint gpio)
     gpio_init(gpio);
     gpio_set_dir(gpio, GPIO_IN);
     gpio_pull_up(gpio); // habilitando pull_up
+}
+void led_setup(uint gpio)
+{
+    gpio_init(gpio);
+    gpio_set_dir(gpio, GPIO_OUT);
 }
 
 void PIO_setup(PIO *pio, uint *sm)
