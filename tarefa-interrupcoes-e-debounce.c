@@ -8,12 +8,38 @@
 #include "libs/animation.h"
 #include "pio_matrix.pio.h"
 
+#define DEBOUNCE_TIME_MS 200
+
 #define button_a 5
 #define button_b 6
 
+uint last_interrupt_time_a = 0;
+uint last_interrupt_time_b = 0;
+uint8_t counter = 0;
+
 void gpio_irq_handler(uint gpio, uint32_t events)
 {
-    printf("Interrupção no GPIO %d, evento: %d\n", gpio, events);
+    uint32_t current_time = to_ms_since_boot(get_absolute_time());
+
+    if (gpio == button_a)
+    {
+        if (current_time - last_interrupt_time_a > DEBOUNCE_TIME_MS)
+        {
+            last_interrupt_time_a = current_time;
+            printf("interrupção do botão A detectada\n");
+            counter = counter < 10 ? counter + 1 : counter;
+        }
+    }
+    if (gpio == button_b)
+    {
+        if (current_time - last_interrupt_time_b > DEBOUNCE_TIME_MS)
+        {
+            last_interrupt_time_b = current_time;
+            printf("interrupção do botão B detectada\n");
+            counter = counter > 0 ? counter - 1 : 0;
+        }
+    }
+    printf("valor do contador: %d\n", counter);
 }
 
 void PIO_setup(PIO *pio, uint *sm);
@@ -39,9 +65,10 @@ int main()
 
     // teste da matriz de leds
     test_matrix(pio, sm);
-    draw_number(pio, sm);
+    // draw_number(pio, sm);
     while (true)
     {
+        // printf("ok");
     }
 }
 
