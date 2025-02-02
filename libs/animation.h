@@ -3,6 +3,5 @@
 
 #include "hardware/pio.h"
 #include "libs/leds.h"
-void draw_number(PIO pio, uint sm, uint index);
-
+void draw_number(PIO pio, uint sm, uint index, bool random_colors);
 #endif

@@ -1,10 +1,22 @@
 #include "animation.h"
 #include "hardware/pio.h"
+#include <stdlib.h>
 
-const pixel red = {255, 0, 0}, black = {0, 0, 0};
 
-void draw_number(PIO pio, uint sm, uint index)
+
+// Função para gerar um pixel com cores aleatórias
+    pixel random_pixel() {
+        pixel p;
+        p.red = rand() % 256;   
+        p.green = rand() % 256; 
+        p.blue = rand() % 256;  
+        return p;
+    }
+   
+void draw_number(PIO pio, uint sm, uint index, bool random_colors)
 {
+pixel red = {255, 0, 0}, black = {0, 0, 0};
+if(random_colors) {red = random_pixel();}
     frame numbers[10] = {
         // 0
         {black, red, red, red, black,

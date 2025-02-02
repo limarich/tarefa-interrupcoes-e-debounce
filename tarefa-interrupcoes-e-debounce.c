@@ -19,6 +19,7 @@ uint last_interrupt_time_b = 0;
 uint counter = 0;
 PIO pio;
 uint sm;
+bool random_colors_mode = false;
 
 void gpio_irq_handler(uint gpio, uint32_t events)
 {
@@ -31,6 +32,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
             last_interrupt_time_a = current_time;
             printf("interrupção do botão A detectada\n");
             counter = counter < 9 ? counter + 1 : counter;
+            if(counter == 9 && !random_colors_mode) random_colors_mode = true;
         }
     }
     if (gpio == button_b)
@@ -40,10 +42,11 @@ void gpio_irq_handler(uint gpio, uint32_t events)
             last_interrupt_time_b = current_time;
             printf("interrupção do botão B detectada\n");
             counter = counter > 0 ? counter - 1 : 0;
+            if(counter == 0 && random_colors_mode) random_colors_mode = false;
         }
     }
     printf("valor do contador: %d\n", counter);
-    draw_number(pio, sm, counter);
+    draw_number(pio, sm, counter, random_colors_mode);
 }
 
 void PIO_setup(PIO *pio, uint *sm);
@@ -70,7 +73,7 @@ int main()
 
     // teste da matriz de leds
     test_matrix(pio, sm);
-    draw_number(pio, sm, counter);
+    draw_number(pio, sm, counter, random_colors_mode);
     while (true)
     {
         // para o led piscar 5 vezes por segundo 1000ms / 5 = 200ms
